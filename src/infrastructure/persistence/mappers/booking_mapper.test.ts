@@ -93,21 +93,34 @@ describe('BookingMapper', () => {
     expect(() => BookingMapper.toDomain(bookingEntity)).toThrow('O número de hóspedes deve ser maior que zero');
   });
 
-  it('deve lançar um erro de validação ao faltar dados obrigatórios em BookingEntity', () => {
+  it('deve lançar um erro de validação ao faltar dados da proriedade em BookingEntity', () => {
     const userEntity = new UserEntity();
     userEntity.id = '1';
     userEntity.name = 'Vitor L';
 
-    const propertyEntity = new PropertyEntity();
-    propertyEntity.id = '1';
-    
     const bookingEntity = new BookingEntity();
     bookingEntity.id = '1';
-    bookingEntity.property = propertyEntity;
     bookingEntity.guest = userEntity;
     bookingEntity.startDate = new Date();
     bookingEntity.endDate = new Date();
     bookingEntity.guestCount = 5;
-    expect(() => BookingMapper.toDomain(bookingEntity)).toThrow('O nome é obrigatório');
+    expect(() => BookingMapper.toDomain(bookingEntity)).toThrow('A propriedade é obrigatória.');
+  });
+
+  it('deve lançar um erro de validação ao faltar dados da hóspede em BookingEntity', () => {
+    const propertyEntity = new PropertyEntity();
+    propertyEntity.id = '1';
+    propertyEntity.name = 'Casa de praia';
+    propertyEntity.description = 'Casa de praia em Santos';
+    propertyEntity.maxGuests = 5;
+    propertyEntity.basePricePerNight = 1000;
+
+    const bookingEntity = new BookingEntity();
+    bookingEntity.id = '1';
+    bookingEntity.property = propertyEntity;
+    bookingEntity.startDate = new Date();
+    bookingEntity.endDate = new Date();
+    bookingEntity.guestCount = 5;
+    expect(() => BookingMapper.toDomain(bookingEntity)).toThrow('O hóspede é obrigatório.');
   });
 });

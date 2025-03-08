@@ -21,10 +21,6 @@ export class Booking {
     dateRange: DateRange,
     guestCount: number
   ) {
-    if (!property) {
-      throw new Error("A propriedade é obrigatória.");
-    }
-    
     if (guestCount <= 0) {
       throw new Error("O número de hóspedes deve ser maior que zero.");
     }
