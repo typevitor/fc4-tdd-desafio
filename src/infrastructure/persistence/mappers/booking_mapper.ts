@@ -12,7 +12,7 @@ export class BookingMapper {
 
     const booking = new Booking(
       entity.id,
-      property || PropertyMapper.toDomain(entity.property),
+      property || PropertyMapper.toDomain(entity?.property),
       guest,
       dateRange,
       entity.guestCount
