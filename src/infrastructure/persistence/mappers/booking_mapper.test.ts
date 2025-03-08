@@ -92,4 +92,22 @@ describe('BookingMapper', () => {
     bookingEntity.guestCount = 0;
     expect(() => BookingMapper.toDomain(bookingEntity)).toThrow('O número de hóspedes deve ser maior que zero');
   });
+
+  it('deve lançar um erro de validação ao faltar dados obrigatórios em BookingEntity', () => {
+    const userEntity = new UserEntity();
+    userEntity.id = '1';
+    userEntity.name = 'Vitor L';
+
+    const propertyEntity = new PropertyEntity();
+    propertyEntity.id = '1';
+    
+    const bookingEntity = new BookingEntity();
+    bookingEntity.id = '1';
+    bookingEntity.property = propertyEntity;
+    bookingEntity.guest = userEntity;
+    bookingEntity.startDate = new Date();
+    bookingEntity.endDate = new Date();
+    bookingEntity.guestCount = 5;
+    expect(() => BookingMapper.toDomain(bookingEntity)).toThrow('O nome é obrigatório');
+  });
 });
