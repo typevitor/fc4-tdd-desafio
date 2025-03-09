@@ -108,4 +108,15 @@ describe("PropertyController", () => {
     expect(response.status).toBe(400);
     expect(response.body.message).toBe("O preço base por noite é obrigatório.");
   });
+
+  it("deve retornar erro com código 400 e mensagem 'O preço base por noite deve ser maior que zero' ao enviar basePricePerNight inválido", async () => {
+    const response = await request(app).post("/properties").send({
+      name: "Casa",
+      description: "Casa com 3 quartos",
+      maxGuests: 6,
+      basePricePerNight: 0,
+    });
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe("O preço base por noite deve ser maior que zero.");
+  });
 });
