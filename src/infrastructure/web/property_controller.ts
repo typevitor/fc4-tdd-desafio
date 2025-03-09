@@ -17,6 +17,10 @@ export class PropertyController {
         return res.status(400).json({ message: "A capacidade máxima deve ser maior que zero." });
       }
 
+      if(!data.basePricePerNight) {
+        return res.status(400).json({ message: "O preço base por noite é obrigatório." });
+      }
+
       const propertyDto: CreatePropertyDTO = { 
         name: data.name,
         description: data.description,

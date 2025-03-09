@@ -98,4 +98,14 @@ describe("PropertyController", () => {
     expect(responseComNegativo.status).toBe(400);
     expect(responseComNegativo.body.message).toBe("A capacidade máxima deve ser maior que zero.");
   });
+
+  it("deve retornar erro com código 400 e mensagem 'O preço base por noite é obrigatório.' ao enviar basePricePerNight ausente", async () => {
+    const response = await request(app).post("/properties").send({
+      name: "Casa",
+      description: "Casa com 3 quartos",
+      maxGuests: 6,
+    });
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe("O preço base por noite é obrigatório.");
+  });
 });
