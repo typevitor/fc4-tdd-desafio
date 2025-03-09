@@ -11,5 +11,5 @@ npm install
 Para executar os Testes:
 
 ```console
-npm run jest
+npm run test
 ```
