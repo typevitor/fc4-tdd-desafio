@@ -64,4 +64,16 @@ describe("PropertyController", () => {
     expect(response.body.data).toHaveProperty("maxGuests");
     expect(response.body.data).toHaveProperty("basePricePerNight");
   });
+
+  it("deve retornar erro com código 400 e mensagem 'O nome da propriedade é obrigatório.' ao enviar um nome vazio", async () => {
+    const response = await request(app).post("/properties").send({
+      name: "",
+      description: "Casa com 3 quartos",
+      maxGuests: 6,
+      basePricePerNight: 100,
+
+    });
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe("O nome da propriedade é obrigatório.");
+  });
 });

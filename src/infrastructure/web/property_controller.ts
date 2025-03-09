@@ -8,7 +8,10 @@ export class PropertyController {
 
   async createProperty(req: Request, res: Response): Promise<Response> {
     try {
-      const data = req.body
+      const data = req.body;
+      if (!data.name) {
+        return res.status(400).json({ message: "O nome da propriedade é obrigatório." });
+      }
       const propertyDto: CreatePropertyDTO = { 
         name: data.name,
         description: data.description,
