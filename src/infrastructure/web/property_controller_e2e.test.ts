@@ -39,7 +39,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await dataSource.destroy();
+  //await dataSource.destroy();
 });
 
 describe("PropertyController", () => {
@@ -75,5 +75,27 @@ describe("PropertyController", () => {
     });
     expect(response.status).toBe(400);
     expect(response.body.message).toBe("O nome da propriedade é obrigatório.");
+  });
+
+  it("deve retornar erro com código 400 e mensagem 'A capacidade máxima deve ser maior que zero.' ao enviar maxGuests igual a zero ou negativo", async () => {
+    const response = await request(app).post("/properties").send({
+      name: "Casa",
+      description: "Casa com 3 quartos",
+      maxGuests: 0,
+      basePricePerNight: 100,
+
+    });
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe("A capacidade máxima deve ser maior que zero.");
+
+    const responseComNegativo = await request(app).post("/properties").send({
+      name: "Casa",
+      description: "Casa com 3 quartos",
+      maxGuests: -2,
+      basePricePerNight: 100,
+
+    });
+    expect(responseComNegativo.status).toBe(400);
+    expect(responseComNegativo.body.message).toBe("A capacidade máxima deve ser maior que zero.");
   });
 });

@@ -12,6 +12,11 @@ export class PropertyController {
       if (!data.name) {
         return res.status(400).json({ message: "O nome da propriedade é obrigatório." });
       }
+
+      if(!data.maxGuests || data.maxGuests <= 0) {
+        return res.status(400).json({ message: "A capacidade máxima deve ser maior que zero." });
+      }
+
       const propertyDto: CreatePropertyDTO = { 
         name: data.name,
         description: data.description,
